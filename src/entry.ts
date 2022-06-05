@@ -1,4 +1,4 @@
-import express from 'express'
+import express, { ErrorRequestHandler } from 'express'
 import cors from 'cors'
 import usersRouter from './api/users'
 import usersPostsRouter from './api/users/posts'
@@ -16,6 +16,18 @@ app.use(useMysql)
 
 app.use('/v1', usersRouter) // 라우터 : 경로를 매핑
 app.use('/v1', usersPostsRouter)
+
+app.get('/err-test', (req, res) => {
+    throw new Error('갑작스러운 에러')
+    res.send({
+        text: 'Error Test Message : hello',
+    })
+})
+
+const errorHandler: ErrorRequestHandler = (err, req, res, next) => {
+    console.log(err)
+    res.send({ text: 'error' })
+}
 
 app.listen(PORT, () => {
     console.log(`Example app listening at http://localhost:${PORT}`)
