@@ -2,6 +2,7 @@ import express, { ErrorRequestHandler } from 'express'
 import cors from 'cors'
 import usersRouter from './api/users'
 import usersPostsRouter from './api/users/posts'
+import testRouter from './api/users/test'
 
 import { useMysql } from './middlewares/useMysql'
 
@@ -16,6 +17,11 @@ app.use(useMysql)
 
 app.use('/v1', usersRouter) // 라우터 : 경로를 매핑
 app.use('/v1', usersPostsRouter)
+app.use('/test', testRouter)
+// 모든 API들의 설정값만 갖고 와서 전부 등록이 가능한 함수
+// controller 계층(함수)
+// Async Wrapper => (req, res, next)
+// 변수, 응답 (req, rex)가 아닌 (params, mysql) => return 으로 응답하도록
 
 app.get('/err-test', (req, res) => {
     throw new Error('갑작스러운 에러')
