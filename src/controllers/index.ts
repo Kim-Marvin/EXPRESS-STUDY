@@ -3,7 +3,12 @@ import * as path from 'path'
 const registerAllApis = async (app, configs) => {
     // app.get('url', (req, res, next) => {})
     for (const apiName in configs) {
-        const apiConfig = configs[apiName]
+        const apiConfig: {
+            path: string
+            method: string
+            handlerPath: string
+            handlerName: string
+        } = configs[apiName]
         const { path: urlPath, method, handlerPath, handlerName } = apiConfig
 
         const apiModule = await import(
@@ -16,7 +21,7 @@ const registerAllApis = async (app, configs) => {
             const params = req.body
             const connection = req.mysqlConnection
             handlerFunction(params, connection)
-                .then((result) => {
+                .then((result: { [key: string]: any }) => {
                     res.json({ success: true, result: result })
                 })
                 .catch((e) => next(e))

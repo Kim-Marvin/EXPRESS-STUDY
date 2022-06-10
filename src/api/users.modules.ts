@@ -1,4 +1,8 @@
-const getUsers = async (params, mysql) => {}
+const getUsers = async (params, mysql) => {
+    return {
+        uers: [],
+    }
+}
 
 const postUsers = async (params, mysql) => {}
 

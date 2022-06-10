@@ -5,6 +5,7 @@ import usersPostsRouter from './api/users/posts'
 import testRouter from './api/users/test'
 
 import { useMysql } from './middlewares/useMysql'
+import controllers from './controllers'
 
 const app = express()
 const PORT = 3714
@@ -14,6 +15,11 @@ app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
 app.use(cors())
 app.use(useMysql)
+
+controllers
+    .registerAllApis(app, apiConfigs)
+    .then(() => {})
+    .catch((e) => {})
 
 app.use('/v1', usersRouter) // 라우터 : 경로를 매핑
 app.use('/v1', usersPostsRouter)
