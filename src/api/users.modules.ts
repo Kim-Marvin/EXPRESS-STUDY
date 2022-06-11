@@ -1,9 +1,10 @@
-const getUsers = async (params, mysql) => {
+const getUsers = async (params: any, mysql: any) => {
+    console.log('getUsers Success')
     return {
-        uers: [],
+        uers: ['data'],
     }
 }
 
-const postUsers = async (params, mysql) => {}
+const postUsers = async (params: any, mysql: any) => {}
 
 export default { getUsers, postUsers }

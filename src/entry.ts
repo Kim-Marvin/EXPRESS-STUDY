@@ -1,11 +1,13 @@
-import express, { ErrorRequestHandler } from 'express'
+import express, { ErrorRequestHandler, Handler } from 'express'
 import cors from 'cors'
-import usersRouter from './api/users'
+import controllers from './controllers'
+import apiConfigs from './configs/api'
+
+import usersRouter from './api/users/users'
 import usersPostsRouter from './api/users/posts'
 import testRouter from './api/users/test'
 
 import { useMysql } from './middlewares/useMysql'
-import controllers from './controllers'
 
 const app = express()
 const PORT = 3714
@@ -18,8 +20,29 @@ app.use(useMysql)
 
 controllers
     .registerAllApis(app, apiConfigs)
-    .then(() => {})
-    .catch((e) => {})
+    .then(() => {
+        const errorHandler: ErrorRequestHandler = (err, req, res, next) => {
+            console.log(err)
+            next()
+        }
+        const errorHandler2: Handler = (req: any, res: any, next) => {
+            console.log('미들웨어 2 겸 에러 핸들러 2')
+            res.send({
+                text: 'error',
+            })
+        }
+
+        app.use(errorHandler)
+        app.use(errorHandler2)
+
+        app.listen(PORT, () => {
+            console.log(`Example app listening at http://localhost:${PORT}`)
+        })
+    })
+    .catch((e) => {
+        console.error(e)
+        process.exit(-1)
+    })
 
 app.use('/v1', usersRouter) // 라우터 : 경로를 매핑
 app.use('/v1', usersPostsRouter)
@@ -29,21 +52,17 @@ app.use('/test', testRouter)
 // Async Wrapper => (req, res, next)
 // 변수, 응답 (req, rex)가 아닌 (params, mysql) => return 으로 응답하도록
 
-app.get('/err-test', (req, res) => {
-    throw new Error('갑작스러운 에러')
-    res.send({
-        text: 'Error Test Message : hello',
-    })
-})
+// app.get('/err-test', (req, res) => {
+//     throw new Error('갑작스러운 에러')
+//     res.send({
+//         text: 'Error Test Message : hello',
+//     })
+// })
 
-const errorHandler: ErrorRequestHandler = (err, req, res, next) => {
-    console.log(err)
-    res.send({ text: 'error' })
-}
-
-app.listen(PORT, () => {
-    console.log(`Example app listening at http://localhost:${PORT}`)
-})
+// const errorHandler: ErrorRequestHandler = (err, req, res, next) => {
+//     console.log(err)
+//     res.send({ text: 'error' })
+// }
 
 // RESTful 디자인 규격 적용
 // 1. app.get 직접 등록
