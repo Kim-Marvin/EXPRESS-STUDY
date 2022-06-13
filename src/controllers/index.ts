@@ -26,9 +26,17 @@ const registerAllApis = async (app: Express, configs: apiConfigsType) => {
                 const params = req.body
                 const connection = req.mysqlConnection
                 handlerFunction(params, connection)
-                    .then((result: { [key: string]: any }) => {
-                        res.json({ success: true, result: result })
-                    })
+                    .then(
+                        (returnObj: {
+                            status: number
+                            data: { [key: string]: any }
+                        }) => {
+                            const { status, data } = returnObj
+                            res.status(status)
+                            res.json(data)
+                            // res.json({ success: true, result: result })
+                        }
+                    )
                     .catch((e) => next(e))
             }
         )

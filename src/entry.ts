@@ -1,4 +1,4 @@
-import express, { ErrorRequestHandler, Handler } from 'express'
+import express from 'express'
 import cors from 'cors'
 import controllers from './controllers'
 import apiConfigs from './configs/api'
@@ -8,6 +8,7 @@ import apiConfigs from './configs/api'
 // import testRouter from './api/users/test'
 
 import { useMysql } from './middlewares/useMysql'
+import { errorHandler } from './middlewares/errorHandler'
 
 const app = express()
 const PORT = 3714
@@ -21,19 +22,7 @@ app.use(useMysql)
 controllers
     .registerAllApis(app, apiConfigs)
     .then(() => {
-        const errorHandler: ErrorRequestHandler = (err, req, res, next) => {
-            console.log(err)
-            next()
-        }
-        const errorHandler2: Handler = (req: any, res: any, next) => {
-            console.log('미들웨어 2 겸 에러 핸들러 2')
-            res.send({
-                text: 'error',
-            })
-        }
-
         app.use(errorHandler)
-        app.use(errorHandler2)
 
         app.listen(PORT, () => {
             console.log(`Example app listening at http://localhost:${PORT}`)
