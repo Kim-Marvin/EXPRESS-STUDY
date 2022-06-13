@@ -17,7 +17,7 @@ interface customConnection extends Connection {
     run?: Function
 }
 
-interface connectionWithRunFunction extends Connection {
+export interface connectionWithRunFunction extends Connection {
     run: Function
 }
 

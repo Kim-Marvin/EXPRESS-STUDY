@@ -3,9 +3,9 @@ import cors from 'cors'
 import controllers from './controllers'
 import apiConfigs from './configs/api'
 
-import usersRouter from './api/users/users'
-import usersPostsRouter from './api/users/posts'
-import testRouter from './api/users/test'
+// import usersRouter from './api/users/users'
+// import usersPostsRouter from './api/users/posts'
+// import testRouter from './api/users/test'
 
 import { useMysql } from './middlewares/useMysql'
 
@@ -44,9 +44,9 @@ controllers
         process.exit(-1)
     })
 
-app.use('/v1', usersRouter) // 라우터 : 경로를 매핑
-app.use('/v1', usersPostsRouter)
-app.use('/test', testRouter)
+// app.use('/v1', usersRouter) // 라우터 : 경로를 매핑
+// app.use('/v1', usersPostsRouter)
+// app.use('/test', testRouter)
 // 모든 API들의 설정값만 갖고 와서 전부 등록이 가능한 함수
 // controller 계층(함수)
 // Async Wrapper => (req, res, next)
