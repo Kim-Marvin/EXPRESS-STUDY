@@ -1,4 +1,4 @@
-const errorConfigs = {
+const errorConfigs: { [key: string]: { message: string; status: number } } = {
     // 파라미터 잘못됨 | 인증이 허가 안 됨 | 등등...
     E0000: { message: '원인을 알 수 없는 에러', status: 500 },
     E1000: {

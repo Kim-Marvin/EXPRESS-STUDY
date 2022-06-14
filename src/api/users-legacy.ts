@@ -1,6 +1,6 @@
 import express from 'express'
 const router = express.Router()
-import mysql from '../../modules/mysql'
+import mysql from '../modules/mysql'
 import { Request, Response, NextFunction } from 'express'
 interface RequestWithConnection extends Request {
     mysqlConnection?: any
