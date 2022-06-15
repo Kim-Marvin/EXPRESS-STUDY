@@ -20,6 +20,12 @@ const apiConfigs: apiConfigsType = {
         handlerPath: './src/api/users.ts',
         handlerName: 'postUsers',
     },
+    postAuth: {
+        path: '/auth',
+        method: 'post',
+        handlerPath: './src/api/auth.ts',
+        handlerName: 'postAuth',
+    },
 }
 
 export default apiConfigs
