@@ -20,10 +20,11 @@ const postAuth = async (
         throw new Error('비밀번호가 일치하지 않습니다.')
     }
 
-    const token = JWT.sign({ id }, 'web-study')
-
+    const payload = { id }
+    const secret = 'web-study'
+    const token = JWT.sign(payload, secret)
     return {
-        status: 200,
+        status: 201,
         data: { token },
     }
 }
