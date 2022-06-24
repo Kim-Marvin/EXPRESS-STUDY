@@ -7,7 +7,7 @@ import mailgunConfigs from '../configs/mailgun'
 const verifyEmailCode = async (params: any, mysql: connection) => {
     const { verifyCodeIdx, code, email } = params
     const countVerifyCodeResult = await mysql.run(
-        `SELECT COUNT(*) as count FROM verify_codes WHERE idx = ? AND code = ?`,
+        `SELECT COUNT(*) as count FROM verify_codes WHERE idx = ? AND email = ? AND code = ?`,
         [verifyCodeIdx, email, code]
     )
     if (countVerifyCodeResult[0].count !== 1) {

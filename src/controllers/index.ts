@@ -32,7 +32,8 @@ const registerAllApis = async (app: Express, configs: apiConfigsType) => {
         ) => {
             const req = request as RequestWithConnection
             const res = response
-            const params = req.body
+
+            const params = Object.assign({}, req.body, req.params)
             const connection = req.mysqlConnection
             handlerFunction(params, connection)
                 .then(
@@ -48,6 +49,9 @@ const registerAllApis = async (app: Express, configs: apiConfigsType) => {
                 )
                 .catch((e) => next(e))
         }
+
+        app.get('/verify-codes/:verifyCodeIdx', (req, res, next) => {})
+
         isRequireAuthorizer
             ? app[method](urlPath, authorizer, APIHandler)
             : app[method](urlPath, APIHandler)
