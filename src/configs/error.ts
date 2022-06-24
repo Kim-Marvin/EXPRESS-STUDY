@@ -13,6 +13,10 @@ const errorConfigs: { [key: string]: { message: string; status: number } } = {
         message: '권한이 올바르지 않습니다.',
         status: 403,
     },
+    E4000: {
+        message: '인증 코드가 틀렸스니다.',
+        status: 403,
+    },
 }
 
 export default errorConfigs
